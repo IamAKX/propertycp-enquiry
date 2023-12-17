@@ -18,7 +18,10 @@ app.get("/:id", (req, res) => {
   axios
     .get("https://13.48.104.206:7240/api/properties/18")
 
-    .then((detail) => res.render("property", { data: detail["data"] }))
+    .then((detail) => {
+      console.log("details : ", detail);
+      res.render("property", { data: detail["data"] });
+    })
     .catch((err) => console.log(err));
 });
 
