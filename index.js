@@ -20,10 +20,15 @@ app.get("/:id", (req, res) => {
     .get("https://13.48.104.206:7240/api/properties/18", (details) => {
       console.log("statusCode:", details.statusCode);
       console.log("headers:", details.headers);
-      details.on("data", (d) => {
-        process.stdout.write(d);
-	      res.json(d.json());
-	      //   res.render("property", { data: d["data"] });
+      let data = "";
+      details.on("data", (chunk) => {
+        data = data + chunk.toString();
+        //   res.render("property", { data: d["data"] });
+      });
+      details.on("end", () => {
+        const body = JSON.parse(data);
+        console.log(body);
+        res.render("property", { data: body["data"] });
       });
     })
     .on("error", (e) => {
