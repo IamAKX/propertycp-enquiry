@@ -20,10 +20,10 @@ app.get("/:id", (req, res) => {
     .get("https://13.48.104.206:7240/api/properties/18", (details) => {
       console.log("statusCode:", details.statusCode);
       console.log("headers:", details.headers);
-
       details.on("data", (d) => {
-        console.log(d);
-        res.render("property", { data: d["data"] });
+        process.stdout.write(d);
+	      res.json(d.json());
+	      //   res.render("property", { data: d["data"] });
       });
     })
     .on("error", (e) => {
