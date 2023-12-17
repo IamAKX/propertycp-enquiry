@@ -9,6 +9,10 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
 app.set("view engine", "hbs");
 app.set("views", "./views");
 
+app.get("/", (req, res) => {
+  res.send("OK");
+});
+
 app.get("/:id", (req, res) => {
   const objectId = parseInt(req.params.id);
   axios
