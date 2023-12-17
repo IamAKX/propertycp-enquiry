@@ -1,7 +1,7 @@
 const express = require("express");
 const hbs = require("hbs");
 const app = express();
-const axios = require("axios");
+const https = require("https");
 
 hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
@@ -15,14 +15,20 @@ app.get("/", (req, res) => {
 
 app.get("/:id", (req, res) => {
   const objectId = parseInt(req.params.id);
-  axios
-    .get("https://13.48.104.206:7240/api/properties/18")
 
-    .then((detail) => {
-      console.log("details : ", detail);
-      res.render("property", { data: detail["data"] });
+  https
+    .get("https://13.48.104.206:7240/api/properties/18", (details) => {
+      console.log("statusCode:", details.statusCode);
+      console.log("headers:", details.headers);
+
+      details.on("data", (d) => {
+        console.log(d);
+        res.render("property", { data: d["data"] });
+      });
     })
-    .catch((err) => console.log(err));
+    .on("error", (e) => {
+      console.error(e);
+    });
 });
 
 app.listen(3000);
