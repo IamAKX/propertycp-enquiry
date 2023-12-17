@@ -16,9 +16,12 @@ app.get("/", (req, res) => {
 app.get("/:id", (req, res) => {
   const objectId = parseInt(req.params.id);
   axios
-    .get("https://13.48.104.206:7240/api/properties/18")
+    .get("http://localhost:5196/api/properties/18")
 
-    .then((detail) => res.render("property", { data: detail["data"] }))
+    .then((detail) => {
+      console.log("details : ", detail);
+      res.render("property", { data: detail["data"] });
+    })
     .catch((err) => console.log(err));
 });
 
