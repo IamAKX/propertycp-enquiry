@@ -17,7 +17,7 @@ app.get("/:id", (req, res) => {
   const objectId = parseInt(req.params.id);
 
   https
-    .get("https://13.48.104.206:7240/api/properties/18", (details) => {
+    .get("https://13.48.104.206:7240/api/properties/" + objectId, (details) => {
       console.log("statusCode:", details.statusCode);
       console.log("headers:", details.headers);
       let data = "";
